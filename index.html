@@ -78,12 +78,12 @@
       <button id="video-permission-button">Allow VR video</button>
     </div>
 
-    <a-scene fog="type: linear; near:1; far:30; color: #1F1F1F;"><!--Night mode: #0c192a-->
+    <a-scene fog="type: linear; near:1; far:600; color: #1F1F1F;"><!--Night mode: #0c192a-->
 
 
       <a-assets>
         <img src="assets/white_grid_thin.png" id="grid" crossorigin="anonymous">
-        <video id="video-src" autoplay loop="true" src="assets/THIRSTHD.mov"></video>
+        <video id="video-src" autoplay loop="true" src="assets/THIRSTHD2.mp4"></video>
         <a-asset-item id="cinema" src="assets/cinema.glb"></a-asset-item>
       </a-assets>
 
@@ -100,17 +100,17 @@
 
       <!-- ENVIRONMENT -->
       
-      <a-box
-          depth="-16.1" height="10.1" width="20" position="0 5 0" color="#FFC65D"></a-box>
-          <!--material="shader:my-custom; videoSampler:#video-src ; transparent:false"></a-box>-->
+      <!--<a-box
+          depth="-16.1" height="10.1" width="20" position="0 5 0" color="#FFC65D">
+          material="shader:my-custom; videoSampler:#video-src ; transparent:false"></a-box>-->
 
       <a-entity
           geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
-          material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.5;"></a-entity>
+          material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.9;"></a-entity>
 
-      <!--<a-sky color="#dbdedb"></a-sky>-->
+      <a-sky color="#0F0F0F"></a-sky>
 
-      <a-entity light="type: point; color: #133255; intensity: 0.75; distance: 50; decay: 2" position="0 4.5 0"></a-entity>
+      <!--<a-entity light="type: point; color: #133255; intensity: 0.75; distance: 50; decay: 2" position="0 4.5 0"></a-entity>-->
 
 
       <!-- END ENVIRONMENT --> 
