@@ -87,22 +87,13 @@
 
     <button id="play-button">Play</button>
 
-    <script>
-    var vid = document.getElementById('video-src');
-    console.log(vid);
-
-    document.getElementById('play-button').addEventListener("click", function(e){
-      this.style.display = 'none';
-      vid.play();
-    }, false);
-    </script>
 
     <a-scene fog="type: linear; near:1; far:600; color: #000000;"><!--Night mode: #0c192a-->
 
 
       <a-assets>
         <img src="assets/white_grid_thin.png" id="grid" crossorigin="anonymous">
-        <video id="video-src" loop="true" autoplay="false" src="assets/THIRSTHD2.mp4" webkit-playsinline></video>
+        <video id="video-src" loop="true" src="assets/THIRSTHD2.mp4" webkit-playsinline></video>
         <a-asset-item id="cinema" src="assets/cinema.glb"></a-asset-item>
       </a-assets>
 
@@ -116,12 +107,22 @@
       <a-video id="video-screen" src="#video-src" position="0 4.5 -9" width="19.2" height="8.04"></a-video>
       <!-- END MEDIAS HOLDER -->
 
+      <script>
+      var vid = document.getElementById('video-src');
+      console.log(vid);
 
+      document.getElementById('play-button').addEventListener("click", function(e){
+        this.style.display = 'none';
+        vid.play();
+      }, false);
+      </script>
+      
       <!-- ENVIRONMENT -->
       
       <!--<a-box
           depth="-18.1" height="10.1" width="20" position="0 5 0" color="#FFC65D">
           material="shader:my-custom; videoSampler:#video-src ; transparent:false"></a-box>-->
+
 
       <a-entity
           geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
