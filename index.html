@@ -78,7 +78,7 @@
       <button id="video-permission-button">Allow VR video</button>
     </div>
 
-    <a-scene fog="type: linear; near:1; far:50; color: #1F1F1F;"><!--Night mode: #0c192a-->
+    <a-scene fog="type: linear; near:1; far:30; color: #1F1F1F;"><!--Night mode: #0c192a-->
 
 
       <a-assets>
@@ -94,24 +94,24 @@
       <!-- END VR CONTROLLERS -->
 
       <!-- MEDIAS HOLDER -->
-      <a-video id="video-screen" src="#video-src" position="0 4.5 -14" width="16" height="9"></a-video>
+      <a-video id="video-screen" src="#video-src" position="0 4.5 -8" width="16" height="9"></a-video>
       <!-- END MEDIAS HOLDER -->
 
 
       <!-- ENVIRONMENT -->
       
       <a-box
-          depth="-28.1" height="10.1" width="20" position="0 5 0"
+          depth="-16.1" height="10.1" width="20" position="0 5 0"
           material="shader:my-custom; videoSampler:#video-src ; transparent:false"></a-box>
 
       <a-entity
-          geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
-          material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.3;"></a-entity>
+          geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"></a-entity>
+          <!--material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.3;"></a-entity>-->
 
       <!--<a-sky color="#dbdedb"></a-sky>-->
 
-      <!--<a-entity light="type: point; color: #133255; intensity: 0.75; distance: 50; decay: 2"
-          position="0 4.5 -12"></a-entity> -->
+      <a-entity light="type: point; color: #133255; intensity: 0.75; distance: 50; decay: 2"
+          position="0 4.5 -5"></a-entity>
 
 
       <!-- END ENVIRONMENT -->
