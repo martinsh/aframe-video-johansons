@@ -40,7 +40,7 @@
 
       <a-assets>
         <img src="assets/white_grid_thin.png" id="grid" crossorigin="anonymous">
-        <video id="video-src" src="assets/interstellar.mp4"></video>
+        <video id="video-src" autoplay loop="true" src="assets/interstellar.mp4"></video>
       </a-assets>
 
 
@@ -65,22 +65,20 @@
 
     <script src="js/AVideoPlayer.js"></script>
     <script type="text/javascript">
-      let scene = document.querySelector('a-scene');
-      var cursor = document.querySelector('a-cursor');
 
       /**
       * CINEMA MODE
       */
-      scene.lightOff = function() {
-        scene.islightOn = true;
-        scene.removeAttribute('animation__fogback');
-        scene.setAttribute('animation__fog', "property: fog.color; to: #0c192a; dur: 800; easing: easeInQuad;");
-      }
-      scene.lightOn = function() {
-        scene.islightOn = false;
-        scene.removeAttribute('animation__fog');
-        scene.setAttribute('animation__fogback', "property: fog.color; to: #dbdedb; dur: 800");
-      }
+      //scene.lightOff = function() {
+      //  scene.islightOn = true;
+      //  scene.removeAttribute('animation__fogback');
+      //  scene.setAttribute('animation__fog', "property: fog.color; to: #0c192a; dur: 800; easing: easeInQuad;");
+      //}
+      //scene.lightOn = function() {
+      //  scene.islightOn = false;
+      //  scene.removeAttribute('animation__fog');
+      //  scene.setAttribute('animation__fogback', "property: fog.color; to: #dbdedb; dur: 800");
+      //}
 
       /**
       * AVideoPlayer

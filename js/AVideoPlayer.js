@@ -4,7 +4,7 @@ var AVideoPlayer = function() {
   this.duration         = 0;
   this.current_progress = 0;
   this.progressWidth    = 4;
-  this.paused           = false;
+  this.paused           = true;
 
   // Elems
   this.elProgressBar   = null;
