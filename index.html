@@ -43,7 +43,7 @@
       //uniform float opacity;
 
       void main () {
-        vec3 color = texture2D(videoSampler,vec2(0.5,0.5))
+        vec3 color = texture2D(videoSampler,vec2(0.5,0.5)).rgb;
         gl_FragColor = vec4(color, 1.0);
       }
     `
