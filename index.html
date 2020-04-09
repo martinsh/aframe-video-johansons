@@ -48,16 +48,6 @@
     });
     </script>-->
 
-    <script>
-    var vid = document.getElementById('video-src');
-    console.log(vid);
-
-    document.getElementById('play-button').addEventListener("click", function(e){
-      this.style.display = 'none';
-      vid.play();
-    }, false);
-    </script>
-
     <style type="text/css">
       #video-permission {
           position: fixed;
@@ -96,6 +86,16 @@
     </div>
 
     <button id="play-button">Play</button>
+
+    <script>
+    var vid = document.getElementById('video-src');
+    console.log(vid);
+
+    document.getElementById('play-button').addEventListener("click", function(e){
+      this.style.display = 'none';
+      vid.play();
+    }, false);
+    </script>
 
     <a-scene fog="type: linear; near:1; far:600; color: #000000;"><!--Night mode: #0c192a-->
 
