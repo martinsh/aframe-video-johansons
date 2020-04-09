@@ -101,12 +101,12 @@
       <!-- ENVIRONMENT -->
       
       <a-box
-          depth="-16.1" height="10.1" width="20" position="0 5 0"
-          material="shader:my-custom; videoSampler:#video-src ; transparent:false"></a-box>
+          depth="-16.1" height="10.1" width="20" position="0 5 0"></a-box>
+          <!--material="shader:my-custom; videoSampler:#video-src ; transparent:false"></a-box>-->
 
       <a-entity
-          geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"></a-entity>
-          <!--material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.3;"></a-entity>-->
+          geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
+          material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.3;"></a-entity>
 
       <!--<a-sky color="#dbdedb"></a-sky>-->
 
@@ -114,7 +114,7 @@
           position="0 4.5 -5"></a-entity>
 
 
-      <!-- END ENVIRONMENT -->
+      <!-- END ENVIRONMENT --> 
     </a-scene>
 
   </body>
