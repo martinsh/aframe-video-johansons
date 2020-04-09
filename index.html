@@ -8,7 +8,7 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 
     <!-- Components and shaders go after A-Frame, but before the scene declaration. -->
-    <!--<script>
+    <script>
     AFRAME.registerShader('my-custom', {
       // The schema declares any parameters for the shader.
       schema: {
@@ -30,7 +30,7 @@
         vUV = uv;
       }
     `
-
+    ,
       fragmentShader: 
     `
       precision mediump float;
@@ -46,7 +46,7 @@
       }
     `
     });
-    </script>-->
+    </script>
 
     <style type="text/css">
       #video-permission {
@@ -116,7 +116,7 @@
         vid.play();
       }, false);
       </script>
-      
+
       <!-- ENVIRONMENT -->
       
       <!--<a-box
