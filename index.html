@@ -12,33 +12,31 @@
     AFRAME.registerShader('my-custom', {
       // The schema declares any parameters for the shader.
       schema: {
-        // Where relevant, it is customary to support color.
-        // The A-Frame schema uses `type:'color'`, so it will parse string values like 'white' or 'red.
-        // `is:'uniform'` tells A-Frame this should appear as uniform value in the shader(s).
         //color: {type:'color', is:'uniform', default:'red'},
         videoSampler: {type:'map', is:'uniform'},
-        // It is customary to support opacity, for fading in and out.
-        //opacity: {type:'number', is:'uniform', default:1.0}
+
       },
       
       // Setting raw to true uses THREE.RawShaderMaterial instead of ShaderMaterial,
-      // so your shader strings are used as-is, for advanced shader usage.
-      // Here, we want the usual prefixes with GLSL constants etc.,
-      // so we set it to false.
-      // (Which is also the default, so we could have omitted it).
+
       raw: false,
       
-      // Here, we're going to use the default vertex shader by omitting vertexShader.
-      // But note that if your fragment shader cares about texture coordinates,
-      // the vertex shader should set varying values to use in the fragment shader. 
-      
-      // Since almost every WebVR-capable browser supports ES6,
-      // define our fragment shader as a multi-line string.
+      vertexShader:
+    `
+      varying vec2 vUV;
+
+      void main(void) {
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        vUV = uv;
+      }
+    `
+
       fragmentShader: 
     `
       precision mediump float;
 
       uniform sampler2D videoSampler;
+      varying vec2 vUv;
 
       //uniform float opacity;
 
@@ -48,6 +46,16 @@
       }
     `
     });
+    </script>
+
+    <script>
+    var vid = document.getElementById('video-src');
+    console.log(vid);
+
+    document.getElementById('play-button').addEventListener("click", function(e){
+      this.style.display = 'none';
+      vid.play();
+    }, false);
     </script>
 
     <style type="text/css">
@@ -69,6 +77,15 @@
         width: 120px;
         height: 2em;
       }
+
+      #play-button {
+        position: fixed;
+        top: calc(50% - 1em);
+        left: calc(50% - 2em);
+        width: 4em;
+        height: 2em;
+        z-index: 10;
+      }
     </style>
 
   </head>
@@ -78,12 +95,14 @@
       <button id="video-permission-button">Allow VR video</button>
     </div>
 
+    <button id="play-button">Play</button>
+
     <a-scene fog="type: linear; near:1; far:600; color: #000000;"><!--Night mode: #0c192a-->
 
 
       <a-assets>
         <img src="assets/white_grid_thin.png" id="grid" crossorigin="anonymous">
-        <video id="video-src" autoplay loop="true" src="assets/THIRSTHD2.mp4"></video>
+        <video id="video-src" loop="true" autoplay="false" src="assets/THIRSTHD2.mp4" webkit-playsinline></video>
         <a-asset-item id="cinema" src="assets/cinema.glb"></a-asset-item>
       </a-assets>
 
