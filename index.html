@@ -8,26 +8,67 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 
     <!-- Components and shaders go after A-Frame, but before the scene declaration. -->
-    <!--<script>
+    <script>
     AFRAME.registerShader('my-custom', {
       // The schema declares any parameters for the shader.
       schema: {
-        //color: {type:'color', is:'uniform', default:'red'},
-        videoSampler: {type:'map', is:'uniform'},
-
+        src: {type:'map', is:'uniform'},
+        ground: {type:'map', is:'uniform'},
       },
       
       // Setting raw to true uses THREE.RawShaderMaterial instead of ShaderMaterial,
 
       raw: false,
       
+      /*init: function (data) {
+        var videoTexture = new THREE.VideoTexture(data.src);
+            
+            videoTexture.minFilter = THREE.LinearMipmapLinearFilter;
+            videoTexture.magFilter = THREE.LinearMipmapLinearFilter;
+            videoTexture.anisotropy = 0;
+            //videoTexture.format = THREE.RGBFormat;
+            //videoTexture.generateMipmaps = true;
+        
+            var image = new THREE.Texture(data.ground);
+            
+            image.minFilter = THREE.LinearMipmapLinearFilter;
+            image.magFilter = THREE.LinearMipmapLinearFilter;
+            image.anisotropy = 2;
+            //videoTexture.format = THREE.RGBFormat;
+            //videoTexture.generateMipmaps = true;
+
+        this.material = new THREE.ShaderMaterial( {
+        uniforms: {
+            texture: {
+                type: "map",
+                value: videoTexture
+            },
+            ground: {
+                type: "map",
+                value: image
+            }
+        },
+        vertexShader: this.vertexShader,
+        fragmentShader: this.fragmentShader });
+      },
+
+      update: function (data) {
+        this.material.src = data.src;
+        this.material.ground = data.ground;
+        //this.material.transparent = data.transparent;
+      },
+ */
       vertexShader:
     `
       varying vec2 vUV;
+      varying vec3 p;
+      varying vec3 v;
 
       void main(void) {
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        vUV = uv;
+        vUV = position.xy;
+        p = vec3(modelViewMatrix * vec4(vec3(0.0,0.0,1.0), 0.0));
+        v = vec3(modelViewMatrix * vec4(position, 1.0)) ;
       }
     `
     ,
@@ -35,18 +76,30 @@
     `
       precision mediump float;
 
-      uniform sampler2D videoSampler;
-      varying vec2 vUv;
+      uniform sampler2D src;
+      uniform sampler2D ground;
+      varying vec2 vUV;
+      varying vec3 p;
+      varying vec3 v;
 
       //uniform float opacity;
 
       void main () {
-        vec3 color = texture2D(videoSampler,vec2(0.5,0.5),6.0).rgb;
-        gl_FragColor = vec4(color, 1.0);
+        vec3 sandColor = texture2D(ground,vec2(vUV.x,vUV.y)*0.2).rgb;
+        vec3 lightColor = vec3(0.0,0.0,0.0);
+        lightColor += texture2D(src,vec2(0.5,0.5),4.0).rgb*0.2;
+        lightColor += texture2D(src,vec2(0.2,0.5),4.0).rgb*0.2;
+        lightColor += texture2D(src,vec2(0.8,0.5),4.0).rgb*0.2;
+        lightColor += texture2D(src,vec2(0.5,0.2),4.0).rgb*0.2;
+        lightColor += texture2D(src,vec2(0.5,0.8),4.0).rgb*0.2;
+
+        float vignette = 1.0-pow(max(1.0-dot(normalize(-v),normalize(p)),0.0)*2.0,2.0);
+
+        gl_FragColor = vec4(sandColor*lightColor*vignette, 1.0);
       }
     `
     });
-    </script>-->
+    </script>
 
     <style type="text/css">
       #video-permission {
@@ -92,9 +145,19 @@
 
 
       <a-assets>
-        <img src="assets/white_grid_thin.png" id="grid" crossorigin="anonymous">
-        <video id="video-src" loop="true" src="assets/THIRST.mp4" webkit-playsinline></video>
-        <!--<a-asset-item id="cinema" src="assets/cinema.glb"></a-asset-item>-->
+        <img id="grid"
+             src="https://raw.githubusercontent.com/martinsh/aframe-video-johansons/master/assets/white_grid.png"
+             crossorigin="anonymous">
+        
+         <img id="ground"
+             src="https://raw.githubusercontent.com/martinsh/aframe-video-johansons/master/assets/beach.png"
+             crossorigin="anonymous">
+        
+        <video id="video-src" 
+               loop="true" 
+               repeat="true"
+               src="https://raw.githubusercontent.com/martinsh/aframe-video-johansons/master/assets/THIRST.mp4"
+               crossorigin="anonymous" webkit-playsinline></video>
       </a-assets>
 
 
@@ -109,6 +172,11 @@
 
       <script>
       var vid = document.getElementById('video-src');
+        
+      //var texture = new THREE.VideoTexture( vid );
+      //texture.minFilter = THREE.LinearFilter;
+      //texture.magFilter = THREE.LinearFilter;
+      //texture.format = THREE.RGBFormat;
       console.log(vid);
 
       document.getElementById('play-button').addEventListener("click", function(e){
@@ -120,13 +188,17 @@
       <!-- ENVIRONMENT -->
       
       <!-- <a-box
-          depth="-18.1" height="10.1" width="20" position="0 5 0" color="#FFC65D"
-          material="shader:my-custom; videoSampler:#video-src ; transparent:false"></a-box>-->
+          depth="-18.1" height="10.1" width="20" position="0 5 0"
+          material="shader:my-custom; src:#video-src ;repeat: 10000 10000; ground:#ground; transparent:false"></a-box> -->
+      
+      <a-entity
+          geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0" position="0 -0.1 0"
+          material="shader:my-custom; src:#video-src ;repeat: 10000 10000; ground:#ground; transparent:false"></a-entity>
 
 
       <a-entity
           geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
-          material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.4;"></a-entity>
+          material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.2;"></a-entity>
 
       <a-sky color="#040404"></a-sky>
 
