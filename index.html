@@ -95,7 +95,7 @@
 
         float vignette = 1.0-pow(max(1.0-dot(normalize(-v),normalize(p)),0.0)*2.0,2.0);
 
-        gl_FragColor = vec4(sandColor*lightColor*vignette, 1.0);
+        gl_FragColor = vec4(sandColor, 1.0);
       }
     `
     });
