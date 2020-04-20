@@ -60,16 +60,6 @@
     </script>
 
        <style type="text/css">
-      #video-permission {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: white;
-          z-index: 10000;
-          display: none;
-      }
 
       #video-permission-button {
         position: fixed;
@@ -79,14 +69,7 @@
         height: 2em;
       }
 
-      #play-button {
-        position: fixed;
-        top: calc(50% - 1em);
-        left: calc(50% - 2em);
-        width: 4em;
-        height: 2em;
-        z-index: 10;
-      }
+
     </style>
     
   </head>
@@ -95,9 +78,6 @@
     <div id="video-permission">
       <button id="video-permission-button">Allow VR video</button>
     </div>
-
-    <button id="play-button">Play</button>
-
 
     <a-scene stats = "true" background="color: #000000" renderer = "antialias: true" >
 
@@ -115,7 +95,6 @@
              loop="true"
              repeat="true"
 
-
              src="  https://johansons-thirst.s3.eu-north-1.amazonaws.com/THIRST2k-HD+1080p.mov"  
              crossorigin = "anonymous"
              webkit-playsinline
@@ -124,7 +103,6 @@
         ></video>
       </a-assets>
 
-      <!-- src="https://raw.githubusercontent.com/martinsh/aframe-video-johansons/master/assets/interstellar.mp4" -->
 
       <!-- VR CONTROLLERS -->
       <a-entity oculus-touch-controls="hand: left"></a-entity>
@@ -132,57 +110,30 @@
       <!-- END VR CONTROLLERS -->
 
       <!-- MEDIAS HOLDER -->
-      <a-video id="video-screen" src="#video-src" position="0 2.1 -5" width="10.0" height="4.2"></a-video>
+      <a-video id="video-screen" src="#video-src" position="0 2.3 -5" width="10.0" height="4.2"></a-video>
       <!-- END MEDIAS HOLDER -->
 
+      
       <script>
-      //var intensity = 4;
-
-        //var texture = THREE.ImageUtils.loadTexture( "textures/hello.png" );
-        //var texture = THREE.ImageUtils.loadTexture( "textures/disturb-normal.png" );
-        //var texture = THREE.ImageUtils.loadTexture( "textures/ash_uvgrid01.jpg" );
-      //texture.wrapS = texture.wrapT = THREE.MirroredRepeatWrapping;
-      //texture.anisotropy = 4;
-      //areaLight1.texture = texture;
-
-      //scene.add( areaLight1 );
-        
       var vid = document.getElementById('video-src');
+    
+      if (vid.paused){
+        setInterval(videoplay, 2000);
+      }
         
-      //var texture = new THREE.VideoTexture( vid );
-      //texture.minFilter = THREE.LinearFilter;
-      //texture.magFilter = THREE.LinearFilter;
-      //texture.format = THREE.RGBFormat;
-      //console.log(vid);
-
-      document.getElementById('play-button').addEventListener("click", function(e){
-        this.style.display = 'none';
+      function videoplay() {
         vid.play();
-      }, false);
+      }
       </script>
 
       <!-- ENVIRONMENT -->
-      
-      <!-- <a-box
-          depth="-18.1" height="10.1" width="20" position="0 5 0"
-          material="shader:my-custom; src:#video-src ;repeat: 10000 10000; ground:#ground; transparent:false"></a-box> -->
+
       
       <a-entity
           geometry="primitive: plane; width: 1000; height: 1000;" rotation="-90 0 0" position="0 -0.1 0"
           material="shader:my-custom; src:#video-src ;repeat: 1000 1000; ground:#ground; transparent:false"></a-entity>
-
-
-      <!-- <a-entity
-          geometry="primitive: plane; width: 1000; height: 1000;" rotation="-90 0 0"
-          material="src: #grid; repeat: 1000 1000; transparent: true; opacity:0.01;"></a-entity>-->
-
-      <!--<a-sky color="#040404"></a-sky>-->
-
-      <!--<a-entity light="type: point; color: #133255; intensity: 0.75; distance: 50; decay: 2" position="0 4.5 0"></a-entity>-->
-
-
-      <!-- END ENVIRONMENT --> 
     </a-scene>
 
   </body>
 </html>
+
