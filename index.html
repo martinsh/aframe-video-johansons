@@ -20,44 +20,6 @@
 
       raw: false,
       
-      /*init: function (data) {
-        var videoTexture = new THREE.VideoTexture(data.src);
-            
-            videoTexture.minFilter = THREE.LinearMipmapLinearFilter;
-            videoTexture.magFilter = THREE.LinearMipmapLinearFilter;
-            videoTexture.anisotropy = 0;
-            //videoTexture.format = THREE.RGBFormat;
-            //videoTexture.generateMipmaps = true;
-        
-            var image = new THREE.Texture(data.ground);
-            
-            image.minFilter = THREE.LinearMipmapLinearFilter;
-            image.magFilter = THREE.LinearMipmapLinearFilter;
-            image.anisotropy = 2;
-            //videoTexture.format = THREE.RGBFormat;
-            //videoTexture.generateMipmaps = true;
-
-        this.material = new THREE.ShaderMaterial( {
-        uniforms: {
-            texture: {
-                type: "map",
-                value: videoTexture
-            },
-            ground: {
-                type: "map",
-                value: image
-            }
-        },
-        vertexShader: this.vertexShader,
-        fragmentShader: this.fragmentShader });
-      },
-
-      update: function (data) {
-        this.material.src = data.src;
-        this.material.ground = data.ground;
-        //this.material.transparent = data.transparent;
-      },
- */
       vertexShader:
     `
       varying vec2 vUV;
@@ -76,7 +38,7 @@
     `
       precision mediump float;
 
-      uniform sampler2D src;
+      //uniform sampler2D src;
       uniform sampler2D ground;
       varying vec2 vUV;
       varying vec3 p;
@@ -86,11 +48,10 @@
 
       void main () {
         vec3 sandColor = texture2D(ground,vec2(vUV.x,vUV.y)*0.2).rgb;
-        vec3 lightColor = vec3(0.042,0.067,0.075)*2.0;
-        lightColor += texture2D(src,vec2(0.5,0.5),4.0).rgb*0.05;
+        vec3 lightColor = vec3(0.32,0.57,0.75)*0.6;
+        //lightColor += texture2D(src,vec2(0.5,0.5),4.0).rgb*0.05;
 
-
-        float vignette = 1.0-pow(max(1.0-dot(normalize(-v),normalize(p)),0.0)*1.1,3.0);
+        float vignette = 1.0-pow(max(1.0-dot(normalize(-v),normalize(p)),0.0)*1.0,3.0);
 
         gl_FragColor = vec4(sandColor*lightColor*vignette, 1.0);
       }
@@ -98,7 +59,7 @@
     });
     </script>
 
-    <style type="text/css">
+       <style type="text/css">
       #video-permission {
           position: fixed;
           top: 0;
@@ -127,7 +88,7 @@
         z-index: 10;
       }
     </style>
-
+    
   </head>
   <body>
 
@@ -138,8 +99,7 @@
     <button id="play-button">Play</button>
 
 
-    <a-scene fog="type: linear; near:1; far:600; color: #000000;"><!--Night mode: #0c192a-->
-
+    <a-scene stats = "true" background="color: #000000" renderer = "antialias: true" >
 
       <a-assets>
         <img id="grid"
@@ -151,12 +111,20 @@
              crossorigin="anonymous">
         
         <video id="video-src" 
-               loop="true" 
-               repeat="true"
-               src="http://d21wvyhhdsbs2n.cloudfront.net/THIRST2k-HD+1080p.mov"
-               crossorigin="anonymous" webkit-playsinline></video>
+
+             loop="true"
+             repeat="true"
+
+
+             src="  https://johansons-thirst.s3.eu-north-1.amazonaws.com/THIRST2k-HD+1080p.mov"  
+             crossorigin = "anonymous"
+             webkit-playsinline
+
+
+        ></video>
       </a-assets>
 
+      <!-- src="https://raw.githubusercontent.com/martinsh/aframe-video-johansons/master/assets/interstellar.mp4" -->
 
       <!-- VR CONTROLLERS -->
       <a-entity oculus-touch-controls="hand: left"></a-entity>
@@ -168,6 +136,17 @@
       <!-- END MEDIAS HOLDER -->
 
       <script>
+      var intensity = 4;
+
+        //var texture = THREE.ImageUtils.loadTexture( "textures/hello.png" );
+        //var texture = THREE.ImageUtils.loadTexture( "textures/disturb-normal.png" );
+        //var texture = THREE.ImageUtils.loadTexture( "textures/ash_uvgrid01.jpg" );
+      //texture.wrapS = texture.wrapT = THREE.MirroredRepeatWrapping;
+      //texture.anisotropy = 4;
+      //areaLight1.texture = texture;
+
+      //scene.add( areaLight1 );
+        
       var vid = document.getElementById('video-src');
         
       //var texture = new THREE.VideoTexture( vid );
@@ -189,13 +168,13 @@
           material="shader:my-custom; src:#video-src ;repeat: 10000 10000; ground:#ground; transparent:false"></a-box> -->
       
       <a-entity
-          geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0" position="0 -0.1 0"
-          material="shader:my-custom; src:#video-src ;repeat: 10000 10000; ground:#ground; transparent:false"></a-entity>
+          geometry="primitive: plane; width: 1000; height: 1000;" rotation="-90 0 0" position="0 -0.1 0"
+          material="shader:my-custom; src:#video-src ;repeat: 1000 1000; ground:#ground; transparent:false"></a-entity>
 
 
       <a-entity
-          geometry="primitive: plane; width: 10000; height: 10000;" rotation="-90 0 0"
-          material="src: #grid; repeat: 10000 10000; transparent: true; opacity:0.2;"></a-entity>
+          geometry="primitive: plane; width: 1000; height: 1000;" rotation="-90 0 0"
+          material="src: #grid; repeat: 1000 1000; transparent: true; opacity:0.01;"></a-entity>
 
       <a-sky color="#040404"></a-sky>
 
