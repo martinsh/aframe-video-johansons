@@ -7,6 +7,13 @@
     <title>Hello, WebVR! • A-Frame</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 
+   <script>
+    function start() 
+    {
+      document.getElementById("pogTuris").style.display = "none"; 
+    }
+    </script>
+
     <!-- Components and shaders go after A-Frame, but before the scene declaration. -->
     <script>
     AFRAME.registerShader('my-custom', {
@@ -63,12 +70,26 @@
 
        <style type="text/css">
 
-      #video-permission-button {
+      body {
+        font-family: helvetica, arial, sans-serif;
+        margin: 2em;
+      }
+
+      h1 {
+        font-style: italic;
+        color: #373fff;
+      }
+
+      /* pogu stili */
+      button {
+        z-index: 1000;
         position: fixed;
-        top: calc(50% - 1em);
-        left: calc(50% - 60px);
-        width: 120px;
-        height: 2em;
+        left: 50%;
+        top: 50%;
+        font-size: 40px;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 20px;
       }
 
       #pogTuris {
@@ -84,15 +105,6 @@
 
     </style>
 
-
- <script>
-   function start() 
-{
-  document.getElementById("pogTuris").style.display = "none"; 
-}
-
-
-  </script>
 
   </head>
   <body>
