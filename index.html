@@ -7,12 +7,6 @@
     <title>Hello, WebVR! • A-Frame</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 
-   <script>
-    function start() 
-    {
-      document.getElementById("pogTuris").style.display = "none"; 
-    }
-    </script>
 
     <!-- Components and shaders go after A-Frame, but before the scene declaration. -->
     <script>
@@ -68,51 +62,11 @@
 
 
 
-       <style type="text/css">
-
-      body {
-        font-family: Lato, sans-serif;
-        font-weight: 300;
-        margin: 2em;
-      }
-
-      h1 {
-        font-style: italic;
-        color: #373fff;
-      }
-
-      /* pogu stili */
-      button {
-        z-index: 1000;
-        position: fixed;
-        left: 50%;
-        top: 50%;
-        font-size: 50px;
-        background-color: #ffffff;
-        padding: 10px;
-        border-radius: 10px;
-        border-width: 0px;
-        margin: 20px;
-      }
-
-      #pogTuris {
-        position: fixed;
-        width: 100vw;
-        height: 100vh;
-        z-index: 10000;
-        background-color: white;
-        align-items: center;
-        justify-content: center;
-      }
-
-
-    </style>
-
 
   </head>
   <body>
 
-    <div id="pogTuris"><button onclick="start()"><b>THIRST</b></button></div>
+
 
     <a-scene loading-screen="dotsColor: white; backgroundColor: white" stats = "false" background="color: #000000" renderer = "antialias: true" >
 
