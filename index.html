@@ -59,6 +59,8 @@
     });
     </script>
 
+
+
        <style type="text/css">
 
       #video-permission-button {
@@ -69,17 +71,35 @@
         height: 2em;
       }
 
+      #pogTuris {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        z-index: 10000;
+        background-color: white;
+        align-items: center;
+        justify-content: center;
+      }
+
 
     </style>
-    
+
+
+ <script>
+   function start() 
+{
+  document.getElementById("pogTuris").style.display = "none"; 
+}
+
+
+  </script>
+
   </head>
   <body>
 
-    <div id="video-permission">
-      <button id="video-permission-button">Allow VR video</button>
-    </div>
+    <div id="pogTuris"><button onclick="start()"><b>Sākt!</b></button></div>
 
-    <a-scene stats = "true" background="color: #000000" renderer = "antialias: true" >
+    <a-scene loading-screen="dotsColor: white; backgroundColor: white" stats = "false" background="color: #000000" renderer = "antialias: true" >
 
       <a-assets>
         <img id="grid"
@@ -99,7 +119,6 @@
              crossorigin = "anonymous"
              webkit-playsinline
 
-
         ></video>
       </a-assets>
 
@@ -115,15 +134,10 @@
 
       
       <script>
-      var vid = document.getElementById('video-src');
-    
-      if (vid.paused){
-        setInterval(videoplay, 2000);
-      }
-        
-      function videoplay() {
-        vid.play();
-      }
+        window.addEventListener('click', function () {
+          var v = document.querySelector('#video-src');
+          v.play();
+        });
       </script>
 
       <!-- ENVIRONMENT -->
@@ -132,6 +146,13 @@
       <a-entity
           geometry="primitive: plane; width: 1000; height: 1000;" rotation="-90 0 0" position="0 -0.1 0"
           material="shader:my-custom; src:#video-src ;repeat: 1000 1000; ground:#ground; transparent:false"></a-entity>
+
+      <script>
+      this.scene = document.querySelector("a-scene");
+      this.scene.renderer.gammaInput = true;
+      this.scene.renderer.gammaOutput = true;
+      </script>
+
     </a-scene>
 
   </body>
